@@ -18,14 +18,28 @@ package frc.robot;
 public final class Constants {
 
     public static final class DriveConstants {
-        // Drive Train Motor IDs
-        public static final int LEFT_FRONT = 1;
-        public static final int RIGHT_FRONT = 2;
-        public static final int LEFT_BACK = 3;
-        public static final int RIGHT_BACK = 4;
-        
-        // Drive Train Speed
-        public static final int DRIVE_SPEED = 1;
-        public static final boolean DRIVE_SQUARE_INPUTS = true;
+    // Drive Train Motor IDs
+    public static final int LEFT_FRONT = 1;
+    public static final int RIGHT_FRONT = 2;
+    public static final int LEFT_BACK = 3;
+    public static final int RIGHT_BACK = 4;
+    
+    // Drive Train Speed
+    public static final int DRIVE_SPEED = 1;
+    public static final Boolean DRIVE_SQUARE_INPUTS = true;
+
+    // Drive Train Mode
+    public static final Boolean TANK_DRIVE = false;
+    public static final Boolean ARCADE_DRIVE = true;
+
+    // Joysticks
+    public static final int JOYSTICK_LEFT = 0;
+    public static final int JOYSTICK_RIGHT = 1;
+    public static final int XBOX_CONTROLLER = 2;
+
+    // Joystick Axis
+    public static final int JOYSTICK_LEFTAXIS = 0;
+    public static final int JOYSTICK_RIGHTAXIS = 1;
+    public static final int JOYSTICK_ROTATEAXIS = 0;
     }
 }
