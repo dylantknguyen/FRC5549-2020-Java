@@ -154,6 +154,7 @@ gradle-app.setting
 .classpath
 .project
 .settings/
+.vscode
 bin/
 imgui.ini
 
