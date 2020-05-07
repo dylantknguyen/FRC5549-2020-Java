@@ -5,30 +5,27 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.Drive;
+package frc.robot.commands.Simple.Semicircle;
 
+import com.revrobotics.ColorSensorV3;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.SemicircleConstants;
+import frc.robot.subsystems.Semicircle;
 
+public class SemicircleAdvance extends CommandBase {
+  private final Semicircle m_semicircle;
+  DigitalInput limitSwitch;
+  ColorSensorV3 colorSensor;
+  public static int balls;
 
-public class DriverControl extends CommandBase {
-  private final Drivetrain m_drivetrain;
-  private final Double m_axis1;
-  private final Double m_axis2;
-  private final Double m_axis3;
-  private final Boolean m_drivetype;
-
-  /**
-   * Creates a new DriverControl.
-   */
-  public DriverControl(Drivetrain drivetrain, Double LeftJoystickAxis, Double rightJoystickAxis, Double rotateAxis, Boolean driveType) {
-    m_drivetrain = drivetrain;
-    m_drivetype = driveType;
-    m_axis1 = LeftJoystickAxis;
-    m_axis2 = rightJoystickAxis;
-    m_axis3 = rotateAxis;
-    addRequirements(drivetrain);
+  public SemicircleAdvance(Semicircle semicircle) {
+    m_semicircle = semicircle;
+    balls = 0;
+    colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
+    limitSwitch = new DigitalInput(SemicircleConstants.LIMIT_SWITCH_PORT);
+    addRequirements(semicircle);
   }
 
   // Called when the command is initially scheduled.
@@ -39,14 +36,9 @@ public class DriverControl extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_drivetype == DriveConstants.TANK_DRIVE) {
-      m_drivetrain.tankDrive(m_axis1, m_axis2);
-    }
-    if (m_drivetype == DriveConstants.ARCADE_DRIVE) {
-      m_drivetrain.arcadeDrive(m_axis1, m_axis3);
-    }
-    else {
-      m_drivetrain.tankDrive(m_axis1, m_axis2);
+    if (colorSensor.getProximity() >= SemicircleConstants.COLOR_SENSOR_SENSITIVITY && balls <= 3) {
+      m_semicircle.forward();
+      balls++;
     }
   }
 

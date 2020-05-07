@@ -8,44 +8,73 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.*;
+import frc.robot.Constants.DriveConstants;
 
 public class Drivetrain extends SubsystemBase {
-    // Sets Motors
-    WPI_TalonSRX leftFront = new WPI_TalonSRX(DriveConstants.LEFT_FRONT);
-    WPI_TalonSRX rightFront = new WPI_TalonSRX(DriveConstants.RIGHT_FRONT);
-    WPI_TalonSRX leftBack = new WPI_TalonSRX(DriveConstants.LEFT_BACK);
-    WPI_TalonSRX rightBack = new WPI_TalonSRX(DriveConstants.RIGHT_BACK);
-
-    // Creates Speed Controller Groups
-    SpeedControllerGroup leftMotors = new SpeedControllerGroup(leftFront, leftBack);
-    SpeedControllerGroup rightMotors = new SpeedControllerGroup(rightFront, rightBack);
-
-    // Create Differential Drive
-    DifferentialDrive drive = new DifferentialDrive(leftMotors, rightMotors);
-
+  // Creates Motors / Speed Controller Groups / Differential Drive
+  WPI_TalonSRX leftFront, rightFront, leftBack, rightBack;
+  SpeedControllerGroup leftMotors, rightMotors;
+    DifferentialDrive drive;
+  DoubleSolenoid gearShift;
+  AHRS navx;
+  
   public Drivetrain() {
-    // Inverts Motors where Required
-    rightFront.setInverted(true);
-    rightBack.setInverted(true);
+    // Sets Motors
+    leftFront = new WPI_TalonSRX(DriveConstants.LEFT_FRONT);
+    rightFront = new WPI_TalonSRX(DriveConstants.RIGHT_FRONT);
+    leftBack = new WPI_TalonSRX(DriveConstants.LEFT_BACK);
+    rightBack = new WPI_TalonSRX(DriveConstants.RIGHT_BACK);
+
+    // Sets Speed Controller Groups
+    leftMotors = new SpeedControllerGroup(leftFront, leftBack);
+    rightMotors = new SpeedControllerGroup(rightFront, rightBack);
+
+    // Sets Differential Drive
+    drive = new DifferentialDrive(leftMotors, rightMotors);
+
+    // Sets Drive Pneumatics
+    gearShift = new DoubleSolenoid(DriveConstants.KFORWARD, DriveConstants.KREVERSE);
+
+    // NavX
+    navx = new AHRS(SPI.Port.kMXP);
   }
 
-  @Override
-  public void periodic() {
+  // Arcade Drive
+  public void arcadeDrive(double rightJoystickAxis, double rightJoystickRotation) {
+    double speed = DriveConstants.DRIVE_SPEED;
+    drive.arcadeDrive(rightJoystickAxis * speed, rightJoystickRotation * speed);
   }
-
-  public void arcadeDrive(Double leftJoystickAxis, Double rightJoystickAxis) {
-      int speed = DriveConstants.DRIVE_SPEED;
-      drive.arcadeDrive(leftJoystickAxis * speed, rightJoystickAxis * speed);
-  }
-
-  public void tankDrive(Double leftJoystickAxis, Double rightJoystickAxis) {
-    int speed = DriveConstants.DRIVE_SPEED;
+  
+  // Tank Drive
+  public void tankDrive(double leftJoystickAxis, double rightJoystickAxis) {
+    double speed = DriveConstants.DRIVE_SPEED;
     drive.tankDrive(leftJoystickAxis * speed, rightJoystickAxis * speed);
+  }
+
+  public void changeGear(boolean bool) {
+    if (bool = true) {
+      gearShift.set(Value.kForward);
+    }
+    else if (bool = false) {
+      gearShift.set(Value.kReverse);
+    }
+  }
+
+  /**
+   * Returns the heading of the robot.
+   *
+   * @return the robot's heading in degrees, from 180 to 180
+   */
+  public double getAngle() {
+    return Math.IEEEremainder(navx.getAngle(), 360) * (DriveConstants.GYRO_REVERSED ? -1.0 : 1.0);  
   }
 }
  

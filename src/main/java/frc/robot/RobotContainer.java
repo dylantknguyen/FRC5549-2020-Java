@@ -3,15 +3,16 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Drivetrain;
-
+import frc.robot.subsystems.Semicircle;
 import frc.robot.Constants.*;
-import frc.robot.commands.Drive.DriverControl;
+import frc.robot.commands.Simple.Drive.DriverControl;
+import frc.robot.commands.Simple.Semicircle.SemicircleAdvance;
 
 public class RobotContainer {
   // Subsystems
   private final Drivetrain drivetrain = new Drivetrain();
+  private final Semicircle semicircle = new Semicircle();
 
   // Joysticks
   public static Joystick joystickLeft = new Joystick(DriveConstants.JOYSTICK_LEFT);
@@ -19,13 +20,12 @@ public class RobotContainer {
   public static XboxController xbox = new XboxController(DriveConstants.XBOX_CONTROLLER);
 
   // Axis
-  public static Double joystickLeftAxis = joystickLeft.getRawAxis(DriveConstants.JOYSTICK_LEFTAXIS);
-  public static Double joystickRightAxis = joystickRight.getRawAxis(DriveConstants.JOYSTICK_RIGHTAXIS);
-  public static Double joystickRightRotate = joystickLeft.getRawAxis(DriveConstants.JOYSTICK_ROTATEAXIS);
+  public static double joystickLeftAxis = joystickLeft.getRawAxis(DriveConstants.JOYSTICK_LEFTAXIS);
+  public static double joystickRightAxis = joystickRight.getRawAxis(DriveConstants.JOYSTICK_RIGHTAXIS);
+  public static double joystickRightRotate = joystickLeft.getRawAxis(DriveConstants.JOYSTICK_ROTATEAXIS);
 
   // Drive Type
   public static Boolean driveType = joystickRight.getTrigger();
-
 
   public RobotContainer() {
     configureButtonBindings();
@@ -33,6 +33,7 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
     drivetrain.setDefaultCommand(new DriverControl(drivetrain, joystickLeftAxis, joystickRightAxis, joystickRightRotate, driveType));
+    semicircle.setDefaultCommand(new SemicircleAdvance(semicircle));
   }
 
   /**
