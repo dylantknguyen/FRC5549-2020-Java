@@ -12,10 +12,12 @@ import frc.robot.subsystems.Intake;
 
 public class IntakeForward extends CommandBase {
   private final Intake m_intake;
+  private final double m_axis;
 
-  public IntakeForward(Intake intake) {
+  public IntakeForward(Intake intake, double axis) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_intake = intake;
+    m_axis = axis;
     addRequirements(intake);
   }
 
@@ -27,7 +29,12 @@ public class IntakeForward extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_intake.forward();
+    if (m_axis >= ButtonConstants.XBOX_TOLERANCE) {
+      m_intake.forward();
+    }
+    else {
+      m_intake.stop();
+    }
   }
 
   // Called once the command ends or is interrupted.

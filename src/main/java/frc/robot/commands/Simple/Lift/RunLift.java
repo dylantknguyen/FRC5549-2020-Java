@@ -12,9 +12,11 @@ import frc.robot.subsystems.Lift;
 
 public class RunLift extends CommandBase {
   private final Lift m_lift;
+  private final double m_axis;
   
-  public RunLift(Lift lift) {
+  public RunLift(Lift lift, double axis) {
     m_lift = lift;
+    m_axis = axis;
     addRequirements(lift);
   }
 
@@ -26,7 +28,12 @@ public class RunLift extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_lift.run();
+    if (m_axis >= ButtonConstants.XBOX_TOLERANCE) {
+      m_lift.run();
+    }
+    else {
+      m_lift.stop();
+    }
   }
 
   // Called once the command ends or is interrupted.

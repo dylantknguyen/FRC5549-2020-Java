@@ -21,9 +21,18 @@ public final class Constants {
         // Driver Buttons
         public static final int GEAR_SHIFT_BUTTON = 1;
         public static final int DRIVE_TYPE_BUTTON = 2;
+        
+        // Operator Axis
+        public static final int INTAKE_AXIS = 1;
+        public static final int LIFT_AXIS = 2;
 
         // Operator Buttons
-        public static final int INTAKE_BUTTON = 1;
+        public static final int LIFT_STATUS_BUTTON = 5;
+        public static final int AUTO_AIM_BUTTON = 6;
+
+        // Tolerance
+        public static final double CONTROLLER_TOLERANCE = 0.25;
+        public static final double XBOX_TOLERANCE = 0.25;
         
     }
 

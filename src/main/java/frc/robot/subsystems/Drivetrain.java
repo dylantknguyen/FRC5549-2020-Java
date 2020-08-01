@@ -68,7 +68,6 @@ public class Drivetrain extends SubsystemBase {
     if (preferredDrive == DriveConstants.TANK_DRIVE) {
       drive.tankDrive(axis1, axis2);
     }
-
     else if (preferredDrive == DriveConstants.ARCADE_DRIVE) {
       drive.arcadeDrive(axis1, axis3);
     }

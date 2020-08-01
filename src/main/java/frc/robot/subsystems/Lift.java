@@ -23,14 +23,23 @@ public class Lift extends SubsystemBase {
   }
 
   public void run() {
-    liftMotor.set(LiftConstants.SPEED);
+    if (LiftStatus.get() == Value.kForward){
+      liftMotor.set(LiftConstants.SPEED);
+    }
+    else {
+      liftMotor.set(0);
+    }
+  }
+
+  public void stop() {
+    liftMotor.set(0);
   }
 
   public void changeLift(boolean bool) {
-    if (bool = true) {
+    if (bool == true) {
       liftStatus.set(Value.kForward);
     }
-    else if (bool = false) {
+    else if (bool == false) {
       liftStatus.set(Value.kReverse);
     }
   }
