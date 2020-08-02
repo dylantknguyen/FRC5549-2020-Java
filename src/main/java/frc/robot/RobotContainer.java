@@ -43,6 +43,7 @@ public class RobotContainer {
   // Operator Axis
   public static double intakeButton = xbox.getRawAxis(ButtonConstants.INTAKE_AXIS);
   public static double liftButton = xbox.getRawAxis(ButtonConstants.LIFT_AXIS);
+  public static double shootButton = xbox.getRawAxis(ButtonConstants.SHOOT_AXIS);
 
   // Operator Buttons
   JoystickButton autoAimButton = new JoystickButton(xbox, ButtonConstants.AUTO_AIM_BUTTON);

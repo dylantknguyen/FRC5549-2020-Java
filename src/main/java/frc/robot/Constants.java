@@ -25,6 +25,7 @@ public final class Constants {
         // Operator Axis
         public static final int INTAKE_AXIS = 1;
         public static final int LIFT_AXIS = 2;
+        public static final int SHOOTER_AXIS = 3;
 
         // Operator Buttons
         public static final int LIFT_STATUS_BUTTON = 5;

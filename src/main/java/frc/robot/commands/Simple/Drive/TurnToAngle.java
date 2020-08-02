@@ -15,15 +15,15 @@ import frc.robot.subsystems.Drivetrain;
 public class TurnToAngle extends PIDCommand {
   public TurnToAngle(Drivetrain drive, double targetAngle) {
     super(
-        // The controller that the command will use
+        // PIDController of Command
         new PIDController(DriveConstants.kP, DriveConstants.kI, DriveConstants.kD),
-        // This should return the measurement
+        // Gets Current Angle
         drive::getAngle,
-        // This should return the setpoint (can also be a constant)
+        // Gets Target Angle
         targetAngle,
-        // This uses the output
+        // Uses Output
         output -> drive.arcadeDrive(0, output),
-        // Require Drive
+        // Require Drive Subsystem
         drive);
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.

@@ -21,10 +21,15 @@ public class Shooter extends SubsystemBase {
 
 
   public Shooter() {
+    // Initalizes Motors
     encoderTop = new WPI_TalonSRX(ShooterConstants.TOP_ENCODER);
     encoderBottom = new WPI_TalonSRX(ShooterConstants.BOTTOM_ENCODER);
     motorTop = new WPI_VictorSPX(ShooterConstants.TOP_MOTOR);
     motorBottom = new WPI_VictorSPX(ShooterConstants.BOTTOM_MOTOR);
+    
+    // Sets Speed Controller Groups
+    topShooterMotors = new SpeedControllerGroup(encoderTop, motorTop);
+    bottomShooterMotors = new SpeedControllerGroup(encoderBottom, motorBottom);
   }
 
   public void setTop(int setpoint) {
@@ -37,6 +42,7 @@ public class Shooter extends SubsystemBase {
     topDerivative = topError - previousTopError;
     rcwTop = (ShooterConstants.PIDTop.kP * topError) + (ShooterConstants.PIDTop.kI * topIntegral) + (ShooterConstants.PIDTop.kD * topDerivative)  + (ShooterConstants.PIDTop.kF * setpoint);
     outputTop = (rcwTop / ShooterConstants.TOP_MAX_RPM);
+    topShooterMotors.set(outputTop);
     previousTopError = topError;
   }
 
@@ -51,5 +57,11 @@ public class Shooter extends SubsystemBase {
     rcwBottom = (ShooterConstants.PIDBottom.kP * bottomError) + (ShooterConstants.PIDBottom.kI * bottomIntegral) + (ShooterConstants.PIDBottom.kD * bottomDerivative) + (ShooterConstants.PIDBottom.kF * setpoint);
     outputBottom = (rcwBottom / ShooterConstants.BOTTOM_MAX_RPM);
     previousBottomError = bottomError;
+    bottomShooterMotors.set(outputBottom);
+  }
+
+  public void stop() {
+    topShooterMotors.set(0);
+    bottomShooterMotors.set(0);
   }
 }
