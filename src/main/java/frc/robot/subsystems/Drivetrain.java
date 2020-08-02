@@ -25,6 +25,7 @@ public class Drivetrain extends SubsystemBase {
     DifferentialDrive drive;
   DoubleSolenoid gearShift;
   AHRS navx;
+  boolean preferredDrive;
   
   public Drivetrain() {
     // Sets Motors
@@ -45,6 +46,9 @@ public class Drivetrain extends SubsystemBase {
 
     // NavX
     navx = new AHRS(SPI.Port.kMXP);
+
+    // Set Preferred Drive
+    preferredDrive = DriveConstants.PREFERRED_DRIVE;
   }
 
   // Arcade Drive
@@ -59,12 +63,38 @@ public class Drivetrain extends SubsystemBase {
     drive.tankDrive(leftJoystickAxis * speed, rightJoystickAxis * speed);
   }
 
-  public void changeGear(boolean bool) {
-    if (bool = true) {
+  // Default Drive
+  public void drive(double axis1, double axis2, double axis3) {
+    if (preferredDrive == DriveConstants.TANK_DRIVE) {
+      drive.tankDrive(axis1, axis2);
+    }
+
+    else if (preferredDrive == DriveConstants.ARCADE_DRIVE) {
+      drive.arcadeDrive(axis1, axis3);
+    }
+  }
+
+  public void changePreferredDrive() {
+    preferredDrive = !preferredDrive;
+  }
+
+  // Set Specific Gear
+  public void setGear(String str) {
+    if (str == "Forward") {
       gearShift.set(Value.kForward);
     }
-    else if (bool = false) {
+    else if (str == "Reverse") {
       gearShift.set(Value.kReverse);
+    }
+  }
+
+  // Changes Gear
+  public void changeGear() {
+    if (gearShift.get() == Value.kForward) {
+      gearShift.set(Value.kReverse);
+    }
+    else if (gearShift.get() == Value.kReverse) {
+      gearShift.set(Value.kForward);
     }
   }
 

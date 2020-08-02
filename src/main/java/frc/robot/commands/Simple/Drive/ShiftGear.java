@@ -10,19 +10,14 @@ package frc.robot.commands.Simple.Drive;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 
-
-public class DriverControl extends CommandBase {
+public class ShiftGear extends CommandBase {
   private final Drivetrain m_drivetrain;
-  private final double m_axis1;
-  private final double m_axis2;
-  private final double m_axis3;
 
-  
-  public DriverControl(Drivetrain drivetrain, double LeftJoystickAxis, double rightJoystickAxis, double rotateAxis) {
+  /**
+   * Creates a new DriverControl.
+   */
+  public ShiftGear(Drivetrain drivetrain) {
     m_drivetrain = drivetrain;
-    m_axis1 = LeftJoystickAxis;
-    m_axis2 = rightJoystickAxis;
-    m_axis3 = rotateAxis;
     addRequirements(drivetrain);
   }
 
@@ -34,7 +29,7 @@ public class DriverControl extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drivetrain.drive(m_axis1, m_axis2, m_axis3);
+    m_drivetrain.changeGear();
   }
 
   // Called once the command ends or is interrupted.
@@ -45,6 +40,6 @@ public class DriverControl extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

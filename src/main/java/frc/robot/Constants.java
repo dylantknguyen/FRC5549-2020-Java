@@ -17,6 +17,16 @@ package frc.robot;
  */
 public final class Constants {
 
+    public static final class ButtonConstants {
+        // Driver Buttons
+        public static final int GEAR_SHIFT_BUTTON = 1;
+        public static final int DRIVE_TYPE_BUTTON = 2;
+
+        // Operator Buttons
+        public static final int INTAKE_BUTTON = 1;
+        
+    }
+
     public static final class DriveConstants {
         // Drive Train Motor IDs
         public static final int LEFT_FRONT = 1;
@@ -31,6 +41,7 @@ public final class Constants {
         // Drive Train Mode
         public static final boolean TANK_DRIVE = false;
         public static final boolean ARCADE_DRIVE = true;
+        public static final boolean PREFERRED_DRIVE = false;
 
         // Joysticks
         public static final int JOYSTICK_LEFT = 0;
@@ -54,7 +65,7 @@ public final class Constants {
         // Tolerants
         public static final double TURN_TOLERANCE_DEGREES = 2;
         public static final boolean GYRO_REVERSED = false;
-        
+
     }
 
     public static final class IndexerConstants {

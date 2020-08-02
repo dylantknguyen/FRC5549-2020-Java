@@ -10,16 +10,14 @@ package frc.robot.commands.Simple.Drive;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 
-public class ChangeGear extends CommandBase {
+public class ChangeDrive extends CommandBase {
   private final Drivetrain m_drivetrain;
-  private final Boolean m_bool;
 
   /**
    * Creates a new DriverControl.
    */
-  public ChangeGear(Drivetrain drivetrain, boolean bool) {
+  public ChangeDrive(Drivetrain drivetrain) {
     m_drivetrain = drivetrain;
-    m_bool = bool;
     addRequirements(drivetrain);
   }
 
@@ -31,7 +29,7 @@ public class ChangeGear extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drivetrain.changeGear(m_bool);
+    m_drivetrain.changePreferredDrive();
   }
 
   // Called once the command ends or is interrupted.
